@@ -71,6 +71,7 @@ img {
   font-size: 40px;
   cursor: pointer;
   padding: 5px;
+  background-color: #fff;
 }
 
 .whole-game-container .text-buttons .play-button:hover {
@@ -89,7 +90,7 @@ img {
 
 @media (max-width: 678px) {
   img {
-    width: 22px;
+    width: 30px;
     margin: auto;
     color: #333;
     display: none;
@@ -110,8 +111,8 @@ img {
   .whole-game-container .game-container {
     -webkit-transform: translateX(-10px);
             transform: translateX(-10px);
-    width: 300px;
-    height: 300px;
+    width: 330px;
+    height: 330px;
     margin-top: 20px;
     display: -ms-grid;
     display: grid;
@@ -123,7 +124,6 @@ img {
   .whole-game-container .game-container .box {
     border: 5px solid #333;
     border-radius: 50%;
-    padding: 20px;
     margin: 10px;
     -webkit-box-shadow: #333 20px 20px;
             box-shadow: #333 20px 20px;
@@ -142,11 +142,12 @@ img {
   }
   .whole-game-container .text-buttons .play-button {
     margin-top: 50px;
-    width: 80px;
+    width: 150px;
     border: 5px solid #333;
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
+    background-color: #fff;
   }
   .whole-game-container .text-buttons .play-button:hover {
     background-color: red;
