@@ -1,131 +1,163 @@
-const holeTopLeft = document.querySelector(".box__top-left"); 
-const moleTopLeft = document.querySelector(".mole__top-left"); 
-const holeTopMid = document.querySelector(".box__top-mid"); 
-const moleTopMid = document.querySelector(".mole__top-mid"); 
-const holeTopRight = document.querySelector(".box__top-right"); 
-const moleTopRight = document.querySelector(".mole__top-right"); 
-const holeMidLeft = document.querySelector(".box__mid-left"); 
-const moleMidLeft = document.querySelector(".mole__mid-left"); 
-const holeMidMid = document.querySelector(".box__mid-mid"); 
-const moleMidMid = document.querySelector(".mole__mid-mid"); 
-const holeMidRight = document.querySelector(".box__mid-right"); 
-const moleMidRight = document.querySelector(".mole__mid-right"); 
-const holeBottomLeft = document.querySelector(".box__bottom-left"); 
-const moleBottomLeft = document.querySelector(".mole__bottom-left"); 
-const holeBottomMid = document.querySelector(".box__bottom-mid"); 
-const moleBottomMid = document.querySelector(".mole__bottom-mid"); 
-const holeBottomRight = document.querySelector(".box__bottom-right"); 
-const moleBottomRight = document.querySelector(".mole__bottom-right"); 
+const HOLE_TL = document.querySelector(".hole-t-l");
+const HOLE_TM = document.querySelector(".hole-t-m");
+const HOLE_TR = document.querySelector(".hole-t-r");
+const HOLE_ML = document.querySelector(".hole-m-l");
+const HOLE_MM = document.querySelector(".hole-m-m");
+const HOLE_MR = document.querySelector(".hole-m-r");
+const HOLE_BL = document.querySelector(".hole-b-l");
+const HOLE_BM = document.querySelector(".hole-b-m");
+const HOLE_BR = document.querySelector(".hole-b-r");
 
-const playButtonPress = document.querySelector(".play-button");
-const scoreHTML = document.querySelector(".score")  
-// const mole = document.querySelector(".mole")  
+const startGame = document.querySelector(".utilities__play-button");
+const score = document.querySelector(".utilities__score");
+const level = document.querySelector(".level__number");
 
+const backgroundColor = document.querySelector(".container");
 
-let score = 0;
+let chosenHole = 0;
+let userPoints = 0;
+let gameSpeed = 1000;
+score.innerHTML = userPoints;
+level.innerHTML = 1;
 
-const changeScore = () => {
-    scoreHTML.innerHTML = `<p>Score: ${score}</p>`;
-}
-changeScore()
-
-const timeout = ((mole) => {
-    setTimeout(function(){ mole.style.display = "none"; }, 2000);
-})
-
-
-
-const NumberRandomiser = () => {
-    return Math.floor(Math.random() * 9) + 1;
-}
-const showRandomMole = () => {
-    switch (NumberRandomiser()) {
-        case 1: moleTopLeft.style.display = "block"; timeout(moleTopLeft); break;
-        case 2: moleTopMid.style.display = "block"; timeout(moleTopMid); break;
-        case 3: moleTopRight.style.display = "block"; timeout(moleTopRight); break;
-        case 4: moleMidLeft.style.display = "block"; timeout(moleMidLeft); break;
-        case 5: moleMidMid.style.display = "block"; timeout(moleMidMid); break;
-        case 6: moleMidRight.style.display = "block"; timeout(moleMidRight); break;
-        case 7: moleBottomLeft.style.display = "block"; timeout(moleBottomLeft); break;
-        case 8: moleBottomMid.style.display = "block"; timeout(moleBottomMid); break;
-        case 9: moleBottomRight.style.display = "block"; timeout(moleBottomRight); break;
-    }
+function gameSpeedUtility() {
+  if (userPoints < 10) {
+    gameSpeed = 2000;
+  } else if (userPoints < 20) {
+    gameSpeed = 2000;
+  } else if (userPoints < 50) {
+    gameSpeed = 2000;
+  } else if (userPoints < 100) {
+    gameSpeed = 1000;
+  }
+  return gameSpeed;
 }
 
-let timerID = ((mole) => {
-    if (score < 10) {
-    setInterval(showRandomMole, 3000);
-    } else if (score > 10) {
-    setInterval(showRandomMole, 1000);
-    }
-})
+function levelUpUtility(event) {
+  if (
+    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
+    userPoints == 10
+  ) {
+    backgroundColor.classList.add("background-red");
+    level.innerHTML = 2;
+  }
+  if (
+    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
+    userPoints == 20
+  ) {
+    addMole();
+    backgroundColor.classList.add("background-yellow");
+    level.innerHTML = 3;
+  }
+  if (
+    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
+    userPoints == 50
+  ) {
+    backgroundColor.classList.add("background-green");
+    level.innerHTML = 4;
+  }
+  if (
+    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
+    userPoints == 70
+  ) {
+    addMole();
+    addMole();
+    backgroundColor.classList.add("background-purple");
+    level.innerHTML = 5;
+  }
+  if (
+    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
+    userPoints == 100
+  ) {
+    backgroundColor.innerHTML = "";
+    backgroundColor.classList.add("game-finish");
+    const button = document.createElement("button");
+    button.innerHTML = "Play Again?";
+    backgroundColor.appendChild(button);
+    button.addEventListener("click", onGameReset);
+  }
+}
 
-// timerID(moleTopRight)
-// timerID(moleMidLeft)
-// timerID(moleMidMid)
-// timerID(moleMidRight)
-// timerID(moleBottomLeft)
-// timerID(moleBottomMid)
-// timerID(moleBottomRight)
+function addMole() {
+  setInterval(() => {
+    makeMolePopUp();
+  }, gameSpeedUtility());
+}
 
+function makeMole(holePos) {
+  const mole = document.createElement("img");
+  mole.src = "mole_edited_grey.svg";
+  mole.classList.add("mole");
+  holePos.appendChild(mole);
+  setTimeout(() => {
+    holePos.removeChild(mole);
+  }, gameSpeedUtility() - 5);
+}
 
+function randomiseMole() {
+  let randomNumber = Math.floor(Math.random() * 9) + 1;
+  switch (randomNumber) {
+    case 1:
+      chosenHole = HOLE_TL;
+      break;
+    case 2:
+      chosenHole = HOLE_TM;
+      break;
+    case 3:
+      chosenHole = HOLE_TR;
+      break;
+    case 4:
+      chosenHole = HOLE_ML;
+      break;
+    case 5:
+      chosenHole = HOLE_MM;
+      break;
+    case 6:
+      chosenHole = HOLE_MR;
+      break;
+    case 7:
+      chosenHole = HOLE_BL;
+      break;
+    case 8:
+      chosenHole = HOLE_BM;
+      break;
+    case 9:
+      chosenHole = HOLE_BR;
+      break;
+    default:
+      break;
+  }
+}
 
-// var myWindow = window.open("", "", "width=200, height=100");
-// myWindow.document.write("<p>This is 'myWindow'</p>");
-// setTimeout(function(){ myWindow.close() }, 3000);
+function makeMolePopUp() {
+  randomiseMole();
+  // this if check makes sure only one mole can occupy one hole at a time
+  if (chosenHole.childNodes.length < 1) {
+    console.log(chosenHole.childNodes.length);
+    makeMole(chosenHole);
+  } else {
+  }
+}
 
-// const showMole = (() => {
-//     showRandomMole()
-    
-// })
-// showMole()
-// showMole(moleTopLeft)
-// showMole(moleTopMid)
-// showMole(moleTopRight)
-// showMole(moleMidLeft)
-// showMole(moleMidMid)
-// showMole(moleMidRight)
-// showMole(moleBottomLeft)
-// showMole(moleBottomMid)
-// showMole(moleBottomRight)
+function onMoleClick(e) {
+  if (e.target.src === "http://localhost:5501/mole_edited_grey.svg") {
+    e.target.remove();
+    userPoints++;
+    score.innerHTML = userPoints;
+  }
+  levelUpUtility(e);
+}
 
-playButtonPress.addEventListener("click", () => {
-        timerID()
-        // setTimeout(function(){ mole.style.display = "none"; }, 3000)
-})
+function onStartGame() {
+  setInterval(() => {
+    makeMolePopUp();
+  }, gameSpeedUtility());
+  startGame.disabled = true;
+}
 
-// (moleTopLeft)
-// (moleTopMid)
-// (moleTopRight)
-// (moleMidLeft)
-// (moleMidMid)
-// (moleMidRight)
-// (moleBottomLeft)
-// (moleBottomMid)
-// (moleBottomRight)
+function onGameReset() {
+  location.reload();
+}
 
-const clickMole = ((hole, mole) => {
-    hole.addEventListener("click", (event) => {
-        if (mole.style.display === "block") {
-            mole.style.display = "none" 
-            // showRandomMole()
-            score++
-            changeScore()
-        } else if (mole.style.display === "none") {
-            event.preventDefault()
-        }
-    })
-})
-clickMole(holeTopLeft, moleTopLeft)
-clickMole(holeTopMid, moleTopMid)
-clickMole(holeTopRight, moleTopRight)
-clickMole(holeMidLeft, moleMidLeft)
-clickMole(holeMidMid, moleMidMid)
-clickMole(holeMidRight, moleMidRight)
-clickMole(holeBottomLeft, moleBottomLeft)
-clickMole(holeBottomMid, moleBottomMid)
-clickMole(holeBottomRight, moleBottomRight)
-
-
-
-
+startGame.addEventListener("click", onStartGame);
+window.addEventListener("click", onMoleClick);
