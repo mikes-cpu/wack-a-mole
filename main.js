@@ -34,7 +34,10 @@ function gameSpeedUtility() {
 }
 
 function levelUpUtility(event) {
-  if (event.target.src === "http://localhost:5501/mole_edited_grey.svg") {
+  // if (event.target.src === "http://localhost:5501/mole_edited_grey.svg") {
+  if (
+    event.target.src === "https://wack-a-mole.sanins.co.uk/mole_edited_grey.svg"
+  ) {
     switch (userPoints) {
       case 10:
         level.innerHTML = 2;
@@ -131,7 +134,10 @@ function makeMolePopUp() {
 }
 
 function onMoleClick(e) {
-  if (e.target.src === "http://localhost:5501/mole_edited_grey.svg") {
+  // if (e.target.src === "http://localhost:5501/mole_edited_grey.svg") {
+  if (
+    e.target.src === "https://wack-a-mole.sanins.co.uk/mole_edited_grey.svg"
+  ) {
     e.target.remove();
     userPoints++;
     score.innerHTML = userPoints;
