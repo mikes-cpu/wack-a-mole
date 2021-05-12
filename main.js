@@ -34,47 +34,38 @@ function gameSpeedUtility() {
 }
 
 function levelUpUtility(event) {
-  if (
-    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
-    userPoints == 10
-  ) {
-    backgroundColor.classList.add("background-red");
-    level.innerHTML = 2;
-  }
-  if (
-    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
-    userPoints == 20
-  ) {
-    addMole();
-    backgroundColor.classList.add("background-yellow");
-    level.innerHTML = 3;
-  }
-  if (
-    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
-    userPoints == 50
-  ) {
-    backgroundColor.classList.add("background-green");
-    level.innerHTML = 4;
-  }
-  if (
-    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
-    userPoints == 70
-  ) {
-    addMole();
-    addMole();
-    backgroundColor.classList.add("background-purple");
-    level.innerHTML = 5;
-  }
-  if (
-    event.target.src === "http://localhost:5501/mole_edited_grey.svg" &&
-    userPoints == 100
-  ) {
-    backgroundColor.innerHTML = "";
-    backgroundColor.classList.add("game-finish");
-    const button = document.createElement("button");
-    button.innerHTML = "Play Again?";
-    backgroundColor.appendChild(button);
-    button.addEventListener("click", onGameReset);
+  if (event.target.src === "http://localhost:5501/mole_edited_grey.svg") {
+    switch (userPoints) {
+      case 10:
+        level.innerHTML = 2;
+        backgroundColor.classList.add("background-red");
+        break;
+      case 20:
+        addMole();
+        level.innerHTML = 3;
+        backgroundColor.classList.add("background-yellow");
+        break;
+      case 50:
+        level.innerHTML = 4;
+        backgroundColor.classList.add("background-green");
+        break;
+      case 70:
+        level.innerHTML = 5;
+        backgroundColor.classList.add("background-purple");
+        addMole();
+        addMole();
+        break;
+      case 100:
+        backgroundColor.innerHTML = "";
+        backgroundColor.classList.add("game-finish");
+        const button = document.createElement("button");
+        button.innerHTML = "You reached 100! Play Again?";
+        backgroundColor.appendChild(button);
+        button.addEventListener("click", onGameReset);
+        break;
+      default:
+        break;
+    }
   }
 }
 

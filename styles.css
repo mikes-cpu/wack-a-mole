@@ -41,7 +41,7 @@ img {
   border-radius: 50%;
   -webkit-box-shadow: #333 2rem 2rem;
           box-shadow: #333 2rem 2rem;
-  margin: 10px;
+  margin: 1rem;
   height: 12rem;
   width: 12rem;
   background-color: #fff;
@@ -68,12 +68,12 @@ img {
 }
 
 .container .container__utilities .utilities__play-button {
-  margin-top: 50px;
-  width: 150px;
+  margin-top: 5rem;
+  width: 15rem;
   border: 5px solid #333;
-  font-size: 40px;
+  font-size: 4rem;
   cursor: pointer;
-  padding: 5px;
+  padding: 0.5rem;
 }
 
 .container .container__utilities .utilities__play-button:hover {
@@ -91,14 +91,14 @@ img {
 }
 
 .container .container__utilities .utilities__score {
-  font-size: 50px;
+  font-size: 5rem;
   display: block;
-  border: 5px solid #333;
+  border: 0.5rem solid #333;
   width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
   padding: 0.8rem 8rem;
-  margin-top: 20px;
+  margin-top: 2rem;
   height: 8rem;
   text-align: center;
   background-color: #fff;
