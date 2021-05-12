@@ -15,7 +15,7 @@ const level = document.querySelector(".level__number");
 const backgroundColor = document.querySelector(".container");
 
 let chosenHole = 0;
-let userPoints = 0;
+let userPoints = 99;
 let gameSpeed = 1000;
 score.innerHTML = userPoints;
 level.innerHTML = 1;
